@@ -151,8 +151,6 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     return line_img
 
 
-# Python 3 has support for cool math symbols.
-
 def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     """
     `img` is the output of the hough_lines(), An image with lines drawn on it.
