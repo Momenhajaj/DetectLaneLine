@@ -63,12 +63,11 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
     # Function has been written to work with Challenge video as well
     # b -0, g-1, r-2
     """
-    NOTE: this is the function you might want to use as a starting point once you want to
-    average/extrapolate the line segments you detect to map out the full
-    extent of the lane (going from the result shown in raw-lines-example.mp4
-    to that shown in P1_example.mp4).
+    NOTE: this is  use as a starting point once you want to
+    average the line segments you detect to map out the full
+    extent of the lane
 
-    Think about things like separating line segments by their
+    separating line segments by their
     slope ((y2-y1)/(x2-x1)) to decide which segments are part of the left
     line vs. the right line.  Then, you can average the position of each of
     the lines and extrapolate to the top and bottom of the lane.
@@ -151,16 +150,3 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     return line_img
 
 
-def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
-    """
-    `img` is the output of the hough_lines(), An image with lines drawn on it.
-    Should be a blank image (all black) with lines drawn on it.
-
-    `initial_img` should be the image before any processing.
-
-    The result image is computed as follows:
-
-    initial_img * α + img * β + λ
-    NOTE: initial_img and img must be the same shape!
-    """
-    return cv2.addWeighted(initial_img, α, img, β, λ)
