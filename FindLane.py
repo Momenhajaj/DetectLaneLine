@@ -60,10 +60,9 @@ def region_of_interest(img, vertices):
 
 
 def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
-    # Function has been written to work with Challenge video as well
-    # b -0, g-1, r-2
+
     """
-    NOTE: this is  use as a starting point once you want to
+   use as a starting point once you want to
     average the line segments you detect to map out the full
     extent of the lane
 
@@ -148,5 +147,4 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     line_img = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
     draw_lines(line_img, lines)
     return line_img
-
 
