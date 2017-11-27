@@ -6,10 +6,6 @@ import cv2
 import math
 
 
-#reading image
-image = mpimg.imread('TraningIMG/RLane.jpg')
-print('This image is:', type(image), 'with dimensions:', image.shape)
-plt.imshow(image)
 # if you wanted to show a single color channel image
 # called 'gray', for example, call as plt.imshow(gray, cmap='gray')
 
@@ -148,3 +144,75 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     draw_lines(line_img, lines)
     return line_img
 
+
+def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
+    """
+    `img` is the output of the hough_lines(), An image with lines drawn on it.
+    Should be a blank image (all black) with lines drawn on it.
+
+    `initial_img` should be the image before any processing.
+
+    The result image is computed as follows:
+
+    initial_img * α + img * β + λ
+    NOTE: initial_img and img must be the same shape!
+    """
+    return cv2.addWeighted(initial_img, α, img, β, λ)
+
+# TODO: Build your pipeline that will draw lane lines
+def lane_detector(image):
+    gray = grayscale(image)
+    #print(image.shape)
+
+    # Define a kernel size and apply Gaussian smoothing
+    kernel_size = 5
+    blur_gray = gaussian_blur(gray, kernel_size)
+
+    # Define our parameters for Canny and apply
+    low_threshold = 10
+    high_threshold = 150
+    edges = canny(blur_gray, low_threshold, high_threshold)
+
+    # Create masked edges image
+    imshape = image.shape
+    vertices = np.array([[(int(0.21*imshape[1]),imshape[0]),(int(0.44*imshape[1]), int(0.59*imshape[0])), (int(0.50*imshape[1]), int(0.59*imshape[0])), (imshape[1],imshape[0])]], dtype=np.int32)
+    masked_edges = region_of_interest(edges, vertices)
+
+
+    # Define the Hough transform parameters and detect lines using it
+    rho = 1 # distance resolution in pixels of the Hough grid
+    theta = (np.pi/180) # angular resolution in radians of the Hough grid
+    threshold = 15     # minimum number of votes (intersections in Hough grid cell)
+    min_line_len = 60 #minimum number of pixels making up a line
+    max_line_gap = 30    # maximum gap in pixels between connectable line segments
+
+    line_img = hough_lines(masked_edges, rho, theta, threshold, min_line_len, max_line_gap)
+
+    final_img = weighted_img(line_img, image, α=0.6, β=1., λ=0.)
+    return edges, masked_edges, final_img
+
+#reading image
+image = mpimg.imread('TraningIMG/LLane.jpg')
+print('This image is:', type(image), 'with dimensions:', image.shape)
+edges, masked_edges, final_img = lane_detector(image)
+#image = canny(image, 20, 70)
+
+# Plots
+plt.figure(figsize=(20, 20))
+fig = plt.figure()
+a = fig.add_subplot(2, 2, 1)
+plt.imshow(image)
+a.set_title('Original')
+
+a = fig.add_subplot(2, 2, 2)
+plt.imshow(edges, cmap='Greys_r')
+a.set_title('Canny')
+
+a = fig.add_subplot(2, 2, 3)
+plt.imshow(masked_edges, cmap='Greys_r')
+a.set_title('Masked Edges')
+
+a = fig.add_subplot(2, 2, 4)
+plt.imshow(final_img)
+a.set_title('Final')
+plt.show()
