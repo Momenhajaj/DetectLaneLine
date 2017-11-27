@@ -3,9 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import cv2
-import math
-#from moviepy.editor import VideoFileClip
-#from IPython.display import HTML
+
 
 # if you wanted to show a single color channel image
 # called 'gray', for example, call as plt.imshow(gray, cmap='gray')
@@ -193,10 +191,10 @@ def lane_detector(image):
     return edges, masked_edges, final_img
 
 #reading image
-image = mpimg.imread('TraningIMG/5.jpeg')
+image = mpimg.imread('TraningIMG/7.jpg')
 print('This image is:', type(image), 'with dimensions:', image.shape)
 edges, masked_edges, final_img = lane_detector(image)
-#image = canny(image, 20, 70)
+
 
 # Plots
 plt.figure(figsize=(20, 20))
