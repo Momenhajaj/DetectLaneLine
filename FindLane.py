@@ -160,7 +160,7 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     """
     return cv2.addWeighted(initial_img, α, img, β, λ)
 
-# TODO: Build your pipeline that will draw lane lines
+
 def lane_detector(image):
     gray = grayscale(image)
     #print(image.shape)
