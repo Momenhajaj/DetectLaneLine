@@ -1,11 +1,14 @@
-import os
+
+
+#import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import cv2
-import math
-#from moviepy.editor import VideoFileClip
-#from IPython.display import HTML
+import imageio
+#import math
+from moviepy.editor import VideoFileClip
+from IPython.display import HTML
 
 # if you wanted to show a single color channel image
 # called 'gray', for example, call as plt.imshow(gray, cmap='gray')
@@ -192,28 +195,17 @@ def lane_detector(image):
     final_img = weighted_img(line_img, image, α=0.6, β=1., λ=0.)
     return edges, masked_edges, final_img
 
-#reading image
-image = mpimg.imread('TraningIMG/5.jpeg')
-print('This image is:', type(image), 'with dimensions:', image.shape)
-edges, masked_edges, final_img = lane_detector(image)
-#image = canny(image, 20, 70)
 
-# Plots
-plt.figure(figsize=(20, 20))
-fig = plt.figure()
-a = fig.add_subplot(2, 2, 1)
-plt.imshow(image)
-a.set_title('Original')
+def process_image(image):
+    # NOTE: The output you return should be a color image (3 channel) for processing video below
+    # you should return the final output (image with lines are drawn on lanes)
+    edges, masked_edges, final_img = lane_detector(image)
+    return final_img
 
-a = fig.add_subplot(2, 2, 2)
-plt.imshow(edges, cmap='Greys_r')
-a.set_title('Canny')
 
-a = fig.add_subplot(2, 2, 3)
-plt.imshow(masked_edges, cmap='Greys_r')
-a.set_title('Masked Edges')
+imageio.plugins.ffmpeg.download()
+white_output = 'white.mp4'
+clip1 = VideoFileClip("TraningIMG/solidWhiteRight.mp4")
+white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!s
+white_clip.write_videofile(white_output, audio=False)
 
-a = fig.add_subplot(2, 2, 4)
-plt.imshow(final_img)
-a.set_title('Final')
-plt.show()
