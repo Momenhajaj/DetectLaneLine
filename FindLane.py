@@ -191,7 +191,7 @@ def lane_detector(image):
     return edges, masked_edges, final_img
 
 #reading image
-image = mpimg.imread('TraningIMG/4.jpg')
+image = mpimg.imread('TraningIMG/7.jpg')
 print('This image is:', type(image), 'with dimensions:', image.shape)
 edges, masked_edges, final_img = lane_detector(image)
 
