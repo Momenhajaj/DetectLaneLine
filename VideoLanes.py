@@ -203,14 +203,10 @@ def process_image(image):
     return final_img
 
 
-'''imageio.plugins.ffmpeg.download()
-white_output = 'white.mp4'
-clip1 = VideoFileClip("TraningIMG/solidWhiteRight.mp4")
-white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!s
-white_clip.write_videofile(white_output, audio=False)'''
+
 
 imageio.plugins.ffmpeg.download()
-white_output = 'Yellow.mp4'
-clip1 = VideoFileClip("TraningIMG/solidYellowLeft.mp4")
+white_output = 'C2.mp4'
+clip1 = VideoFileClip("vid/1.mp4")
 white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!s
 white_clip.write_videofile(white_output, audio=False)
