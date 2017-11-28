@@ -54,7 +54,7 @@ def region_of_interest(img, vertices):
     return masked_image
 
 
-def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
+def draw_lines(img, lines, color=[255, 0, 0], thickness=5):
 
     """
    use as a starting point once you want to
@@ -191,7 +191,7 @@ def lane_detector(image):
     return edges, masked_edges, final_img
 
 #reading image
-image = mpimg.imread('TraningIMG/7.jpg')
+image = mpimg.imread('TraningIMG/011.jpg')
 print('This image is:', type(image), 'with dimensions:', image.shape)
 edges, masked_edges, final_img = lane_detector(image)
 

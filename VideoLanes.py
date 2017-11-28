@@ -59,7 +59,7 @@ def region_of_interest(img, vertices):
     return masked_image
 
 
-def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
+def draw_lines(img, lines, color=[255, 0, 0], thickness=8):
 
     """
    use as a starting point once you want to
@@ -163,7 +163,7 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     """
     return cv2.addWeighted(initial_img, α, img, β, λ)
 
-# TODO: Build your pipeline that will draw lane lines
+
 def lane_detector(image):
     gray = grayscale(image)
     #print(image.shape)
@@ -207,6 +207,6 @@ def process_image(image):
 
 imageio.plugins.ffmpeg.download()
 white_output = 'C2.mp4'
-clip1 = VideoFileClip("vid/1.mp4")
+clip1 = VideoFileClip("vid/H.mp4")
 white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!s
 white_clip.write_videofile(white_output, audio=False)
